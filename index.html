@@ -8,7 +8,6 @@
     html, body {
       height: 100%;
       margin: 0;
-      padding: 0;
       background: transparent;
     }
     body {
@@ -24,38 +23,32 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 100vw;
-      height: 100vh;
+      width: 90vw;
+      height: 90vh;
       background: transparent;
-      user-select: none;
     }
-    .date, .time {
+    .date, .clock {
       font-family: 'Arial Narrow', Arial, sans-serif;
       color: #fff;
       background: transparent;
-      text-align: center;
-      width: 100%;
-      font-size: 8vw;
-      line-height: 1.1;
-      font-weight: 400;
-      letter-spacing: 0.03em;
+      font-size: min(12vw, 12vh);
+      font-weight: normal;
       margin: 0;
       padding: 0;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      text-align: center;
+      text-shadow: none;
     }
     .date {
-      margin-bottom: 2vw;
-      margin-top: 0;
+      margin-bottom: 2vh;
     }
-    .time {
+    .clock {
       margin-top: 0;
     }
     @media (max-width: 600px) {
-      .date, .time {
-        font-size: 12vw;
-      }
-      .date {
-        margin-bottom: 4vw;
+      .date, .clock {
+        font-size: min(16vw, 16vh);
       }
     }
   </style>
@@ -63,32 +56,27 @@
 <body>
   <div class="clock-container">
     <div class="date" id="date"></div>
-    <div class="time" id="time"></div>
+    <div class="clock" id="clock"></div>
   </div>
   <script>
-    function formatTime(date) {
-      let hours = date.getHours();
-      const minutes = date.getMinutes();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      if (hours === 0) hours = 12;
-      return `${hours}:${minutes < 10 ? '0'+minutes : minutes} ${ampm}`;
-    }
-
-    function formatDate(date) {
-      // Example: Thursday, July 10, 2025
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      return date.toLocaleDateString(undefined, options);
-    }
-
     function updateClock() {
       const now = new Date();
-      document.getElementById('date').textContent = formatDate(now);
-      document.getElementById('time').textContent = formatTime(now);
-    }
+      // Format date (e.g., Friday, July 11, 2025)
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('date').textContent = now.toLocaleDateString(undefined, options);
 
+      // Format time (h:mm AM/PM, no leading zero on hour)
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 => 12
+      const minStr = minutes < 10 ? '0' + minutes : minutes;
+      const timeString = `${hours}:${minStr} ${ampm}`;
+      document.getElementById('clock').textContent = timeString;
+    }
     updateClock();
-    setInterval(updateClock, 1000 * 10); // Update every 10 seconds (no seconds displayed)
+    setInterval(updateClock, 1000 * 10); // Update every 10 seconds for efficiency
   </script>
 </body>
 </html>
