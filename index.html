@@ -37,14 +37,14 @@
       width: 100%;
       font-size: 6vw;
       line-height: 1.1;
-      font-weight: 400;
+      font-weight: bold;
       letter-spacing: 0.03em;
       margin: 0;
       padding: 0;
       text-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
     .date {
-      margin-bottom: 2vw;
+      margin-bottom: 0vw;
       margin-top: 0;
     }
     .time {
@@ -52,10 +52,10 @@
     }
     @media (max-width: 600px) {
       .date, .time {
-        font-size: 12vw;
+        font-size: 10vw;
       }
       .date {
-        margin-bottom: 4vw;
+        margin-bottom: 0vw;
       }
     }
   </style>
@@ -88,7 +88,7 @@
     }
 
     updateClock();
-    setInterval(updateClock, 1000 * 10); // Update every 10 seconds (no seconds displayed)
+    setInterval(updateClock, 1000 * 1); // Update every 10 seconds (no seconds displayed)
   </script>
 </body>
 </html>
